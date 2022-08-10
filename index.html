@@ -1,1 +1,113 @@
-<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>eth-demo-webpack</title><link href=/static/css/app.4d04fdf047a33f4bd438667c6db7eb85.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=/static/js/manifest.2ae2e69a05c33dfc65f8.js></script><script type=text/javascript src=/static/js/vendor.47313e48d554e1b5e547.js></script><script type=text/javascript src=/static/js/app.9dbd88e73d0e5f055231.js></script></body></html>
+<html>
+
+<head>
+<title>我的第一个 HTML 页面</title>
+<style type="text/css">
+body,ul,li,a,p,div{padding:0px; margin:0px; font-size:14px;}
+ul,li{list-style:none;}
+a{ text-decoration:none; color:#333;}
+ #demo{
+  overflow:hidden; /*溢出的部分不显示*/
+  width:290px;
+  height:228px;/*一定要确切，避免demo1与demo2之间的距离过大*/
+  padding:5px;
+  margin:50px auto;
+  }
+#express li{
+   list-style:none;
+   font-size:14px;
+   height:25px;
+   margin:0px 5px;
+   line-height:180%;/*行与行之间的距离*/
+   letter-spacing:2px;/*字与字之间的距离*/
+   border-bottom:1px dashed #ccc;
+   cursor:pointer;
+   }
+</style>
+</head>
+
+<body>
+
+<button onclick="click1()">复制文本</button>
+<a href="baidumap://map/marker?location=40.047669,116.313082&title=我的位置&content=百度奎科大厦&src=ios.baidu.openAPIdemo">地图标点</a>
+<input type="file" id="fileInput">
+<div id="demo" >
+ <div id="demo1" >
+  <ul id="express">
+   <li><a href="#">召开背街小巷综合整治工作调度会1</a></li>
+   <li><a href="#">平原街道加大出店经营整治2</a></li>
+   <li><a href="#">平原街道召开计生业务培训会3</a></li>
+  </ul>
+ </div>
+ <div id="demo2"></div>
+</div>
+<script type="text/javascript">
+
+ function click1(){
+	console.log(123)
+	alert('dsfsdf')
+ }
+ document.getElementById("fileInput").addEventListener('change', function selectedFilechanged( ) {
+	console.log( this.files);
+	var reader = new FileReader();
+	reader.readAsText(this.files[0]);//读取文件的内容
+	reader.onload = function () {
+		console.log(this.result);//回调结果
+	}
+ });
+
+ //获取id=demo,id=demo1,id=demo2的元素对象，并把id=demo1的内容赋值给id=demo2
+ var demo=document.getElementById("demo");
+ var demo1=document.getElementById("demo1");
+ var demo2=document.getElementById("demo2");
+ demo2.innerHTML=demo1.innerHTML;
+ //给demo1,demo2加相同的高度
+ demo1.style.height=demo.offsetHeight+"px";
+ demo2.style.height=demo.offsetHeight+"px";
+ //定时器，每隔50毫秒调用一次scrollup()函数，来实现文字的滚动
+ var timer=window.setInterval("scrollup()",50);
+ //定义函数
+ function scrollup()
+ {
+  //如果demo滚上去的高度大于demo的高度，重新给demo赋值从0再开始滑动
+  if(demo.scrollTop>=demo.offsetHeight)
+  {
+   demo.scrollTop=0;
+  }else
+  {
+   demo.scrollTop++;
+  }
+ }
+ //鼠标放上停止滚动，鼠标离开继续滚动
+  demo.onmouseover=function(){
+         //清除定时器
+         clearInterval(timer);
+         }
+  demo.onmouseout=function(){
+         //添加定时器
+         timer=window.setInterval("scrollup()",50);
+         }
+		 
+		 
+		 
+		 window.addEventListener('load', function() {
+		 debugger
+		 console.log(window)
+            if (!window.web3) {//用来判断你是否安装了metamask
+              window.alert('Please install MetaMask first.');//如果没有会去提示你先去安装
+              return;
+            }
+            if (!web3.eth.coinbase) {//这个是判断你有没有登录，coinbase是你此时选择的账号
+              window.alert('Please activate MetaMask first.');
+              return;
+            }
+          // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+            if (typeof web3 !== 'undefined') {
+               
+                // Use the browser's ethereum provider
+                web3.personal.sign(web3.fromUtf8("Hello from wanghui!"), web3.eth.coinbase, console.log);
+　　　　　　　}　　　　});
+</script>
+</body>
+
+</html>
